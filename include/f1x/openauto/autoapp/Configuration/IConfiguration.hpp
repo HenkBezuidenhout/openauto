@@ -80,6 +80,11 @@ public:
     virtual void setSpeechAudioChannelEnabled(bool value) = 0;
     virtual AudioOutputBackendType getAudioOutputBackendType() const = 0;
     virtual void setAudioOutputBackendType(AudioOutputBackendType value) = 0;
+
+    virtual bool getWirelessAutoConnect() const = 0;
+    virtual void setWirelessAutoConnect(bool value) = 0;
+    virtual std::string getWirelessAutoConnectAddress() const = 0;
+    virtual void setWirelessAutoConnectAddress(const std::string& value) = 0;
 };
 
 }

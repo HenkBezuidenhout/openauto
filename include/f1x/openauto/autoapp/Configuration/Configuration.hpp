@@ -72,6 +72,11 @@ public:
     AudioOutputBackendType getAudioOutputBackendType() const override;
     void setAudioOutputBackendType(AudioOutputBackendType value) override;
 
+    bool getWirelessAutoConnect() const override;
+    void setWirelessAutoConnect(bool value) override;
+    std::string getWirelessAutoConnectAddress() const override;
+    void setWirelessAutoConnectAddress(const std::string& value) override;
+
 private:
     void readButtonCodes(boost::property_tree::ptree& iniConfig);
     void insertButtonCode(boost::property_tree::ptree& iniConfig, const std::string& buttonCodeKey, aasdk::proto::enums::ButtonCode::Enum buttonCode);
@@ -91,6 +96,9 @@ private:
     bool musicAudioChannelEnabled_;
     bool speechAudiochannelEnabled_;
     AudioOutputBackendType audioOutputBackendType_;
+
+    bool wirelessAutoConnect_;
+    std::string wirelessAutoConnectAddress_;
 
     static const std::string cConfigFileName;
 
@@ -128,6 +136,9 @@ private:
     static const std::string cInputScrollWheelButtonKey;
     static const std::string cInputBackButtonKey;
     static const std::string cInputEnterButtonKey;
+
+    static const std::string cWirelessAutoConnect;
+    static const std::string cWirelessAutoConnectAddress;
 };
 
 }

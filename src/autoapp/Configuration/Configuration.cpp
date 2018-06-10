@@ -65,6 +65,9 @@ const std::string Configuration::cInputScrollWheelButtonKey = "Input.ScrollWheel
 const std::string Configuration::cInputBackButtonKey = "Input.BackButton";
 const std::string Configuration::cInputEnterButtonKey = "Input.EnterButton";
 
+const std::string Configuration::cWirelessAutoConnect = "Wireless.AutoConnect";
+const std::string Configuration::cWirelessAutoConnectAddress = "Wireless.AutoConnectAddress";
+
 Configuration::Configuration()
 {
     this->load();
@@ -103,6 +106,9 @@ void Configuration::load()
         musicAudioChannelEnabled_ = iniConfig.get<bool>(cAudioMusicAudioChannelEnabled, true);
         speechAudiochannelEnabled_ = iniConfig.get<bool>(cAudioSpeechAudioChannelEnabled, true);
         audioOutputBackendType_ = static_cast<AudioOutputBackendType>(iniConfig.get<uint32_t>(cAudioOutputBackendType, static_cast<uint32_t>(AudioOutputBackendType::RTAUDIO)));
+
+        wirelessAutoConnect_ = iniConfig.get<bool>(cWirelessAutoConnect, false);
+        wirelessAutoConnectAddress_ = iniConfig.get<std::string>(cWirelessAutoConnectAddress, "");
     }
     catch(const boost::property_tree::ini_parser_error& e)
     {
@@ -129,6 +135,8 @@ void Configuration::reset()
     musicAudioChannelEnabled_ = true;
     speechAudiochannelEnabled_ = true;
     audioOutputBackendType_ = AudioOutputBackendType::RTAUDIO;
+    wirelessAutoConnect_ = false;
+    wirelessAutoConnectAddress_ = "";
 }
 
 void Configuration::save()
@@ -153,6 +161,10 @@ void Configuration::save()
     iniConfig.put<bool>(cAudioMusicAudioChannelEnabled, musicAudioChannelEnabled_);
     iniConfig.put<bool>(cAudioSpeechAudioChannelEnabled, speechAudiochannelEnabled_);
     iniConfig.put<uint32_t>(cAudioOutputBackendType, static_cast<uint32_t>(audioOutputBackendType_));
+
+    iniConfig.put<bool>(cWirelessAutoConnect, wirelessAutoConnect_);
+    iniConfig.put<std::string>(cWirelessAutoConnectAddress, wirelessAutoConnectAddress_);
+
     boost::property_tree::ini_parser::write_ini(cConfigFileName, iniConfig);
 }
 
@@ -294,6 +306,26 @@ AudioOutputBackendType Configuration::getAudioOutputBackendType() const
 void Configuration::setAudioOutputBackendType(AudioOutputBackendType value)
 {
     audioOutputBackendType_ = value;
+}
+
+bool Configuration::getWirelessAutoConnect() const
+{
+    return wirelessAutoConnect_;
+}
+
+void Configuration::setWirelessAutoConnect(bool value)
+{
+    wirelessAutoConnect_ = value;
+}
+
+std::string Configuration::getWirelessAutoConnectAddress() const
+{
+    return wirelessAutoConnectAddress_;
+}
+
+void Configuration::setWirelessAutoConnectAddress(const std::string& value)
+{
+    wirelessAutoConnectAddress_ = value;
 }
 
 void Configuration::readButtonCodes(boost::property_tree::ptree& iniConfig)

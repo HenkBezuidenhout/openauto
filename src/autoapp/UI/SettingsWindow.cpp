@@ -45,6 +45,7 @@ SettingsWindow::SettingsWindow(configuration::IConfiguration::Pointer configurat
     connect(ui_->pushButtonSelectAll, &QPushButton::clicked, std::bind(&SettingsWindow::setButtonCheckBoxes, this, true));
     connect(ui_->pushButtonResetToDefaults, &QPushButton::clicked, this, &SettingsWindow::onResetToDefaults);
     connect(ui_->pushButtonShowBindings, &QPushButton::clicked, this, &SettingsWindow::onShowBindings);
+    connect(ui_->checkBoxWirelessAutoConnect, &QRadioButton::clicked, [&](bool checked) { ui_->lineEditWirelessAutoConnectAddress->setEnabled(checked); });
 }
 
 SettingsWindow::~SettingsWindow()
@@ -98,6 +99,9 @@ void SettingsWindow::onSave()
     configuration_->setMusicAudioChannelEnabled(ui_->checkBoxMusicAudioChannel->isChecked());
     configuration_->setSpeechAudioChannelEnabled(ui_->checkBoxSpeechAudioChannel->isChecked());
     configuration_->setAudioOutputBackendType(ui_->radioButtonRtAudio->isChecked() ? configuration::AudioOutputBackendType::RTAUDIO : configuration::AudioOutputBackendType::QT);
+
+    configuration_->setWirelessAutoConnect(ui_->checkBoxWirelessAutoConnect->isChecked());
+    configuration_->setWirelessAutoConnectAddress(ui_->lineEditWirelessAutoConnectAddress->text().toStdString());
 
     configuration_->save();
     this->close();
@@ -154,6 +158,10 @@ void SettingsWindow::load()
     const auto& audioOutputBackendType = configuration_->getAudioOutputBackendType();
     ui_->radioButtonRtAudio->setChecked(audioOutputBackendType == configuration::AudioOutputBackendType::RTAUDIO);
     ui_->radioButtonQtAudio->setChecked(audioOutputBackendType == configuration::AudioOutputBackendType::QT);
+
+    ui_->checkBoxWirelessAutoConnect->setChecked(configuration_->getWirelessAutoConnect());
+    ui_->lineEditWirelessAutoConnectAddress->setEnabled(configuration_->getWirelessAutoConnect());
+    ui_->lineEditWirelessAutoConnectAddress->setText(QString::fromStdString(configuration_->getWirelessAutoConnectAddress()));
 }
 
 void SettingsWindow::loadButtonCheckBoxes()

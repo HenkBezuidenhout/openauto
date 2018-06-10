@@ -133,6 +133,47 @@ color: rgb(238, 238, 236);</string>
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="tabWireless">
+    <attribute name="title">
+     <string>Wireless</string>
+    </attribute>
+    <widget class="QCheckBox" name="checkBoxWirelessAutoConnect">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>600</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Auto connect to a wireless device on the local network</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditWirelessAutoConnectAddress">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>60</y>
+       <width>115</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelWirelessAutoConnectAddress">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>67</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Address:</string>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="tabVideo">
     <attribute name="title">
      <string>Video</string>
